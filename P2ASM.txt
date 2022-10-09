@@ -1,0 +1,4 @@
+ ORG $00
+ ADCB [D,SP]
+ LDAA [10,X] 
+ END
