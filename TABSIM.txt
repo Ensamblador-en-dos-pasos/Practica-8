@@ -1,0 +1,3 @@
+ContLoc(Etiqueta-relativa)	 UNO	 0017
+ContLoc(Etiqueta-relativa)	 TRES	 002A
+ContLoc(Etiqueta-relativa)	 CUATRO	 002C

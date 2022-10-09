@@ -1,4 +1,13 @@
- ORG $00
- ADCB [D,SP]
- LDAA [10,X] 
- END
+    ORG $17
+UNO LDAA $2
+    LDAA #$2
+    LBRA DOS
+    BCS UNO
+    LBCS TRES
+    BRA UN
+    LDD #511
+TRES BCS DOS
+CUATRO SWI
+    END
+
+;-32768 a 32767

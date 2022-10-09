@@ -89,4 +89,26 @@ public class Conversor {
         }
         return valor;
     }
+
+    /**
+     * Metodo para crear cero dependiendo la longitud del hexadecimal
+     * @param valor Cadena en hexadecimal
+     * @return El Hexadecimal con los ceros necesarios a la derecha
+     */
+    public String cerosF(String valor) {
+        switch (valor.length()) {
+            case 1://un solo hexadecimal en la direccion
+                valor = "FFF"+valor;
+                break;
+                case 2://Dos hexadecimales en la direccion
+                valor = "FF"+valor;
+                break;
+                case 3://Tres hexadecimales en la direccion
+                valor = "F"+valor;
+                break;
+            default:
+                break;
+        }
+        return valor;
+    }
 }
