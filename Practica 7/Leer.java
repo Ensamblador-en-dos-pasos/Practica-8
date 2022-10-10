@@ -50,8 +50,14 @@ public class Leer {
             // Lee el archivo origial y reemplaza todos los espacios en blanco
             // por comas en el archivo temporal
             while ((linea = ej.readLine()) != null) {
-                out.write(reemplBlkPlcs(linea.toUpperCase()));
-                out.println();
+                if (linea.endsWith("\"")|| linea.endsWith("\"&")) {
+                    out.write(reemplBlkPlcs(linea));
+                    out.println();
+                }else{
+                    out.write(reemplBlkPlcs(linea.toUpperCase()));
+                    out.println();                 
+                }
+                
             }
         } finally {
             if (out != null) {

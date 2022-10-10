@@ -45,7 +45,7 @@ public class CodMaquina {
                         System.out.println("CODOP = " + codop + "\tCMC = " + cmc);
                         break;
 
-                    case "Directo":
+                    case "Directo"://
                         System.out.print("CODOP = " + codop + "\tCMC = " + cmc);
                         op = valOpe.basesnum(oper);
                         switch (op) {
@@ -78,40 +78,52 @@ public class CodMaquina {
                         }
 
                         break;
-                    case "Extendido":
+                    case "Extendido":// Valores mayores a 256
                         System.out.print("CODOP = " + codop + "\tCMC = " + cmc);
-                        op = valOpe.basesnum(oper);
-                        switch (op) {
-                            case 1:// Hex
-                                base = conv.hextodec(oper);
-                                cmf = conv.dectohex(base);
-                                cmf = conv.ceros(cmf);
-                                System.out.println(" CMF: " + cmf.toUpperCase());
-                                break;
-                            case 2:// Oct
-                                base = conv.octtodec(oper);
-                                cmf = conv.dectohex(base);
-                                cmf = conv.ceros(cmf);
-                                System.out.println(" CMF: " + cmf.toUpperCase());
-                                break;
-                            case 3:// Bin
-                                base = conv.bintodec(oper);
-                                cmf = conv.dectohex(base);
-                                cmf = conv.ceros(cmf);
-                                System.out.println(" CMF: " + cmf.toUpperCase());
-                                break;
-                            case 4:// dec
-                                cmf = conv.dectohex(Integer.parseInt(oper));
-                                cmf = conv.ceros(cmf);
-                                System.out.println(" CMF: " + cmf.toUpperCase());
-                                break;
 
-                            default:
-                                break;
+                        Pattern Ext_et;
+                        Matcher busc;
+
+                        Ext_et = Pattern.compile("^[A-Z]+\\w*+$");
+                        busc = Ext_et.matcher(oper);
+                        boolean enc = busc.find();
+
+                        if (enc) {
+                            cmf = tbs.BuscarEt(oper);
+                            System.out.println(" CMF: " + cmf.toUpperCase());
+                        } else {
+                            op = valOpe.basesnum(oper);
+                            switch (op) {
+                                case 1:// Hex
+                                    base = conv.hextodec(oper);
+                                    cmf = conv.dectohex(base);
+                                    cmf = conv.ceros(cmf);
+                                    System.out.println(" CMF: " + cmf.toUpperCase());
+                                    break;
+                                case 2:// Oct
+                                    base = conv.octtodec(oper);
+                                    cmf = conv.dectohex(base);
+                                    cmf = conv.ceros(cmf);
+                                    System.out.println(" CMF: " + cmf.toUpperCase());
+                                    break;
+                                case 3:// Bin
+                                    base = conv.bintodec(oper);
+                                    cmf = conv.dectohex(base);
+                                    cmf = conv.ceros(cmf);
+                                    System.out.println(" CMF: " + cmf.toUpperCase());
+                                    break;
+                                case 4:// dec
+                                    cmf = conv.dectohex(Integer.parseInt(oper));
+                                    cmf = conv.ceros(cmf);
+                                    System.out.println(" CMF: " + cmf.toUpperCase());
+                                    break;
+
+                                default:
+                                    break;
+                            }
                         }
-
                         break;
-                    case "Inmediato":
+                    case "Inmediato":// Valores inmediatos
                         System.out.print("CODOP = " + codop + "\tCMC = " + cmc);
                         op = valOpe.basesnum(oper);
                         switch (op) {
@@ -536,13 +548,12 @@ public class CodMaquina {
                             clact = conv.hextodec(val);
                             cl = conv.hextodec(valcontloc);
                             rs = clact - cl;
-
                             switch (bpc) {
                                 case "1":
                                     if (rs >= -128 && rs <= 127) {
                                         if (rs < 0) {
                                             bin = Integer.toBinaryString(Math.abs(rs));// Convierte a binario
-                                            bin = idx.C2(bin);// Hace Complemento a 2
+                                            bin = idx.C2_8bits(bin);// Hace Complemento a 2
                                             rs = conv.bintodec(bin);// Convierte a decimal
                                             cmf = conv.dectohex(rs);// Convertir decimal ahexa
                                             if (cmf.length() == 1) {
@@ -564,7 +575,7 @@ public class CodMaquina {
                                     if (rs >= -32768 && rs <= 32767) {
                                         if (rs < 0) {
                                             bin = Integer.toBinaryString(Math.abs(rs));// Convierte a binario
-                                            bin = idx.C2(bin);// Hace Complemento a 2
+                                            bin = idx.C2_16bits(bin);// Hace Complemento a 2
                                             rs = conv.bintodec(bin);// Convierte a decimal
                                             cmf = conv.dectohex(rs);// Convertir decimal ahexa
                                             cmf = conv.ceros(cmf);// rellena con ceros
@@ -589,6 +600,81 @@ public class CodMaquina {
 
                         break;
 
+                    case "Constante":
+                        System.out.print("CODOP = " + codop + "\tCMC = " + null);
+
+                        switch (bpc) {
+                            case "1":
+                                op = valOpe.basesnum(oper);
+                                switch (op) {
+                                    case 1:// Hex
+                                        base = conv.hextodec(oper);
+                                        cmf = conv.dectohex(base);
+                                        cmf = conv.ceros9bits(cmf);
+                                        System.out.println(" CMF: " + cmf.toUpperCase());
+                                        break;
+                                    case 2:// Oct
+                                        base = conv.octtodec(oper);
+                                        cmf = conv.dectohex(base);
+                                        cmf = conv.ceros9bits(cmf);
+                                        System.out.println(" CMF: " + cmf.toUpperCase());
+                                        break;
+                                    case 3:// Bin
+                                        base = conv.bintodec(oper);
+                                        cmf = conv.dectohex(base);
+                                        cmf = conv.ceros9bits(cmf);
+                                        System.out.println(" CMF: " + cmf.toUpperCase());
+                                        break;
+                                    case 4:// dec
+                                        cmf = conv.dectohex(Integer.parseInt(oper));
+                                        cmf = conv.ceros9bits(cmf);
+                                        System.out.println(" CMF: " + cmf.toUpperCase());
+                                        break;
+                                    default:
+                                        break;
+                                }
+
+                                break;
+                            case "2":
+                                op = valOpe.basesnum(oper);
+                                switch (op) {
+                                    case 1:// Hex
+                                        base = conv.hextodec(oper);
+                                        cmf = conv.dectohex(base);
+                                        cmf = conv.ceros(cmf);
+                                        System.out.println(" CMF: " + cmf.toUpperCase());
+                                        break;
+                                    case 2:// Oct
+                                        base = conv.octtodec(oper);
+                                        cmf = conv.dectohex(base);
+                                        cmf = conv.ceros(cmf);
+                                        System.out.println(" CMF: " + cmf.toUpperCase());
+                                        break;
+                                    case 3:// Bin
+                                        base = conv.bintodec(oper);
+                                        cmf = conv.dectohex(base);
+                                        cmf = conv.ceros(cmf);
+                                        System.out.println(" CMF: " + cmf.toUpperCase());
+                                        break;
+                                    case 4:// dec
+                                        cmf = conv.dectohex(Integer.parseInt(oper));
+                                        cmf = conv.ceros(cmf);
+                                        System.out.println(" CMF: " + cmf.toUpperCase());
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                break;
+
+                            default:
+                                break;
+                        }
+                        break;
+                    case "CHARACTER":
+                    System.out.print("CODOP = " + codop + "\tCMC = " + null);
+                    cmf = tbs.asciiFCC(oper);
+                    System.out.println(" CMF: " + cmf.toUpperCase());
+                        break;
                     default:
                         // Cierre del bucle
                         if (codop.equals("END")) {

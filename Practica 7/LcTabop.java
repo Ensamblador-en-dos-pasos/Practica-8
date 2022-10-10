@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
+import javax.sound.sampled.BooleanControl;
+
 /**
  * @author Isaac Ulises
  * @author Saul
@@ -51,7 +53,7 @@ public class LcTabop {
                     TABSIM = new PrintWriter(new FileWriter(tab, true));
                     TMP = new PrintWriter(new FileWriter(tmp, true));
 
-                    while (sc.hasNextLine()) {// Leer hasta que temine&
+                    while (sc.hasNextLine()) {// Leer hasta que termine
 
                         String palabra = sc.next();
 
@@ -98,9 +100,8 @@ public class LcTabop {
                                     bytes = sc.nextInt();
                                     switch (bytes) {
                                         case 1:
-                                            TMP.printf("%s\t %s\t %s\t %s\t %s\t %s\t %s", "ContLoc", dec1, et, codop,
-                                                    oper, addr, bytes);
-                                            TMP.println();
+                                            TMP.printf("%s\t %s\t %s\t %s\t %s\t %s\t %s\t %s\t", "ContLoc", dec1, et, codop,
+                                                    oper, addr, bpc, bytes);
                                             if (et != null) {
                                                 TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta-relativa)", et, dec1);
                                                 TABSIM.println();
@@ -108,13 +109,15 @@ public class LcTabop {
                                             // Metodos para sumar el operando y quese cargue a la siguiente direccion
                                             dec = 1 + conv.hextodec(dec1);
                                             dec1 = conv.dectohex(dec);
+                                            dec1 = conv.ceros(dec1);
                                             dec1 = dec1.toUpperCase();// Convierte el valor de dec1 a mayuscula
+                                            TMP.printf("%s", dec1);
+                                            TMP.println();
                                             ban = true;
                                             break;
                                         case 2:
-                                            TMP.printf("%s\t %s\t %s\t %s\t %s\t %s\t %s\t", "ContLoc", dec1, et, codop,
-                                                    oper, addr, bytes);
-                                            TMP.println();
+                                            TMP.printf("%s\t %s\t %s\t %s\t %s\t %s\t %s\t %s\t", "ContLoc", dec1, et, codop,
+                                                    oper, addr, bpc, bytes);
                                             if (et != null) {
                                                 TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta-relativa)", et, dec1);
                                                 TABSIM.println();
@@ -122,7 +125,10 @@ public class LcTabop {
                                             // Metodos para sumar el operando y quese cargue a la siguiente direccion
                                             dec = 2 + conv.hextodec(dec1);
                                             dec1 = conv.dectohex(dec);
+                                            dec1 = conv.ceros(dec1);
                                             dec1 = dec1.toUpperCase();// Convierte el valor de dec1 a mayuscula
+                                            TMP.printf("%s", dec1);
+                                            TMP.println();
                                             ban = true;
                                             break;
 
@@ -198,8 +204,9 @@ public class LcTabop {
                                 case 5:// FCC
                                     addr = sc.next();
                                     bytes = sc.nextInt();
-                                    TMP.printf("%s\t %s\t %s\t %s\t %s\t %S\t %s\t%s", "ContLoc", dec1, et, codop, oper, addr, bytes, bpc);
-                                    TMP.println();
+                                    String result = oper.replaceAll("\s", "&");
+                                    result = result.replaceAll("\"", "");
+                                    TMP.printf("%s\t %s\t %s\t %s\t %s\t %S\t %s\t %s\t", "ContLoc", dec1, et, codop, result, addr, bytes, bpc);
                                     if (et != null) {
                                         TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta-relativa)", et, dec1);
                                         TABSIM.println();
@@ -223,8 +230,7 @@ public class LcTabop {
                                     switch (bytes) {
                                         case 1:
 
-                                            TMP.printf("%s\t %s\t %s\t %s\t %s\t %s\t %s\t %s", "ContLoc", dec1, et, codop, oper, addr, bytes, bpc);
-                                            TMP.println();
+                                            TMP.printf("%s\t %s\t %s\t %s\t %s\t %s\t %s\t %s\t", "ContLoc", dec1, et, codop, oper, addr, bytes, bpc);
                                             if (et != null) {
                                                 TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta-relativa)", et, dec1);
                                                 TABSIM.println();
@@ -233,6 +239,7 @@ public class LcTabop {
                                             oper = valOpe.Val_directivas(oper);
                                             dec = (conv.hextodec(oper) * 1) + conv.hextodec(dec1);// Suma en y multiplica en decimal
                                             dec1 = conv.dectohex(dec);
+                                            dec1 = conv.ceros(dec1);
                                             dec1 = dec1.toUpperCase();
                                             TMP.printf("%s", dec1);
                                             TMP.println();

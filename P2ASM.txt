@@ -1,13 +1,7 @@
-    ORG $17
-UNO LDAA $2
-    LDAA #$2
+    ORG $A
+UNO DB 10
+    LDAA UNO
+    FCC "Hola mundo"
+DOS DW @4076
     LBRA DOS
-    BCS UNO
-    LBCS TRES
-    BRA UN
-    LDD #511
-TRES BCS DOS
-CUATRO SWI
     END
-
-;-32768 a 32767

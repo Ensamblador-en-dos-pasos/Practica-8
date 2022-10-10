@@ -16,5 +16,7 @@ public class Ensamblador {
                 read.Lcc();
                 tab.buscar();
                 cod.cMaquina();
+                
+                
         }
 }
