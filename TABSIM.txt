@@ -1,2 +1,2 @@
 ContLoc(Etiqueta-relativa)	 UNO	 000A	
-ContLoc(Etiqueta-relativa)	 DOS	 001A	
+ContLoc(Etiqueta-relativa)	 DOS	 0018	

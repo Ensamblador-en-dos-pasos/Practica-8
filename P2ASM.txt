@@ -1,7 +1,7 @@
     ORG $A
 UNO DB 10
     LDAA UNO
-    FCC "Hola mundo"
+    fcc "Hola mundo"
 DOS DW @4076
     LBRA DOS
     END

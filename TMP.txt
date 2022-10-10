@@ -1,7 +1,7 @@
 Dir_Inic	 000A	 null	 ORG	 $A	 Dire_Inic	 0	 0	 000A
 ContLoc	 000A	 UNO	 DB	 10	 Constante	 0	 1	000B
 ContLoc	 000B	 null	 LDAA	 UNO	 Extendido	 B6	 2	000E
-ContLoc	 000E	 null	 FCC	 Callate&puto	 CHARACTER	 0	 0	001A
-ContLoc	 001A	 DOS	 DW	 @4076	 Constante	 0	 2	001C
-ContLoc	 001C	 null	 LBRA	 DOS	 REL	 1820	 2	0020
-ContLoc	 0020	 null	 END	 null	 Directiva	 0	 0	 0020
+ContLoc	 000E	 null	 FCC	 Hola&mundo	 CHARACTER	 0	 0	0018
+ContLoc	 0018	 DOS	 DW	 @4076	 Constante	 0	 2	001A
+ContLoc	 001A	 null	 LBRA	 DOS	 REL	 1820	 2	001E
+ContLoc	 001E	 null	 END	 null	 Directiva	 0	 0	 001E

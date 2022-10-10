@@ -288,6 +288,7 @@ public class Leer {
                 }
 
                 if (ver) {// Guardar los valores en la lista
+                    codop = codop.toUpperCase();
                     bus.add(et, codop, oper);
                     add(et, codop);
                 }
