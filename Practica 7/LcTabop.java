@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-import javax.sound.sampled.BooleanControl;
-
 /**
  * @author Isaac Ulises
  * @author Saul

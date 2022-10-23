@@ -8,6 +8,12 @@ public class BcTabSim {
     String valor, contloc, et, valenc;
     boolean ban = true;
 
+    /**
+     * Metodo para buscar los valoresd e la etiqueta
+     * @param oper
+     * @return
+     * @throws FileNotFoundException
+     */
     public String BuscarEt(String oper) throws FileNotFoundException{
         Scanner sc = new Scanner(new FileReader("TABSIM.txt"));
         
@@ -33,6 +39,13 @@ public class BcTabSim {
 
         return valenc;
     }
+
+    /**
+     * Metodo para convertir los valores a numerico ascii 
+     * y por ultimo a hexadecimal 
+     * @param palabra
+     * @return
+     */
     public String asciiFCC(String palabra) {     
         String palfinal ="";
         palabra = palabra.replaceAll("&", " ");

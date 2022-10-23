@@ -1,0 +1,7 @@
+    ORG $A
+UNO DB 10
+    LDAA UNO
+    fcc "Hola mundo"
+DOS DW @4076
+    LBRA DOS
+    END

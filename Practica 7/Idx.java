@@ -41,7 +41,41 @@ public class Idx {
 
     /**
      * Resta de binarios para pos o pre incremento
-     * 
+     * @param bin
+     * @return
+     */
+    public String C1_8bits(String bin) {
+        String resultado = "";
+        int x = 0, y = 7, y1 = 7;
+        String[] result = {"0", "0", "0", "0", "0", "0", "0", "0"};
+        x = (bin.length()-1);
+        String[] arr = bin.split("");
+
+        while(x >= 0){
+            result[y] = arr[x];
+            y--;
+            x--;
+        }
+
+        for (int i = y1; i >= 0; i--) {
+            if (result[i].equals("0")) {
+                result[i] = "1";
+            } else {
+                result[i] = "0";
+            }
+        }
+
+        
+        for (int i = 0; i < result.length; i++) {
+            resultado = resultado + result[i];
+
+        }
+
+        return resultado;
+    }// fin metodo
+
+    /**
+     * Resta de binarios para pos o pre incremento
      * @param bin
      * @return
      */
