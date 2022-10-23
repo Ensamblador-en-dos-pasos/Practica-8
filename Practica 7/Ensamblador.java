@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -7,7 +8,7 @@ import java.io.IOException;
  * @version 1.45
  */
 public class Ensamblador {
-        public static void main(String[] args) throws FileNotFoundException, IOException { 
+        public static void main(String[] args) throws FileNotFoundException, IOException, InterruptedException { 
                 /*
                 Leer read = new Leer();
                 LcTabop tab = new LcTabop();
@@ -17,11 +18,11 @@ public class Ensamblador {
                 tab.buscar();
                 cod.cMaquina();
                 */
-                String bin = "1101";
-                Idx id = new Idx();
-                
+                File f = new File("OBJ.txt");
+                if(f.exists()){f.delete();}
                 Registros_S re = new Registros_S();
                 re.S0("P1.ASM");
+                re.S9();
                 //10010010
         }
 }

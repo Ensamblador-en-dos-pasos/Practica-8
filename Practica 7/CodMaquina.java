@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Scanner;
@@ -26,6 +27,10 @@ public class CodMaquina {
     public void cMaquina() throws FileNotFoundException {
         Scanner sc = new Scanner(new FileReader("TMP.txt"));
         boolean ban = sc.hasNextLine();
+        File f = new File("OBJ.txt");
+        if (f.exists()) {
+            f.delete();
+        }
         try {// abre el fichero
              // Lee el archivo origial y reemplaza todos los espacios en blanco
              // por comas en el archivo temporal
@@ -536,6 +541,7 @@ public class CodMaquina {
 
                     case "REL":// Relativos o saltos
                         System.out.print("CODOP = " + codop + "\tCMC = " + cmc);
+                        //Data = cmc
                         String val = tbs.BuscarEt(oper); // Busqueda de la etiqueta
                         /*
                          * cl = contador de localidades anterior
@@ -566,6 +572,8 @@ public class CodMaquina {
                                                 cmf = "0" + cmf;
                                             }
                                             System.out.println(" CMF: " + cmf.toUpperCase());
+                                            //S1 Data + cmf
+                                            //S1(Data, dir-inic, addr)
                                         }
                                     } else {
                                         System.out.println("Error, Rango de desplazamiento no valido");
