@@ -1,14 +1,15 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CodMaquina {
-    String valor, contloc, et, codop, oper, addr, cmc, cmf, ff, valcontloc, bpc;
+    String valor, contloc, et, codop, oper, addr, cmc, cmf, ff, valcontloc, bpc, dirinic;
     String[] result;
-    String resultado;
+    String resultado, data;
     String[] result1;
     int op = 0, base = 0, valor1;
     boolean negpos = true;
@@ -17,20 +18,23 @@ public class CodMaquina {
     Conversor conv = new Conversor();
     Idx idx = new Idx();
     BcTabSim tbs = new BcTabSim();
+    Registros_S ss = new Registros_S();
 
     /**
      * Método para leer el archivo
      * 
      * @param nom nombre del archivo
+     * @throws InterruptedException
      * @throws IOException
      */
-    public void cMaquina() throws FileNotFoundException {
+    public void cMaquina() throws IOException, InterruptedException {
         Scanner sc = new Scanner(new FileReader("TMP.txt"));
         boolean ban = sc.hasNextLine();
         File f = new File("OBJ.txt");
         if (f.exists()) {
             f.delete();
         }
+        ss.S0("holis");
         try {// abre el fichero
              // Lee el archivo origial y reemplaza todos los espacios en blanco
              // por comas en el archivo temporal
@@ -45,9 +49,18 @@ public class CodMaquina {
                 bpc = sc.next();
                 valcontloc = sc.next();
 
+                if (codop.equals("ORG")) {
+                    dirinic = contloc;
+                }
+                if(cmc.equals("0")){
+                    cmc="";
+                }
+
                 switch (addr) {
                     case "Inherente":
                         System.out.println("CODOP = " + codop + "\tCMC = " + cmc);
+                        data = cmc.toUpperCase() + cmf.toUpperCase();
+                        ss.data(data, dirinic, addr);
                         break;
 
                     case "Directo"://
@@ -81,7 +94,8 @@ public class CodMaquina {
                             default:
                                 break;
                         }
-
+                        data = cmc.toUpperCase() + cmf.toUpperCase(null);
+                        ss.data(data, dirinic, addr);
                         break;
                     case "Extendido":// Valores mayores a 256
                         System.out.print("CODOP = " + codop + "\tCMC = " + cmc);
@@ -127,6 +141,8 @@ public class CodMaquina {
                                     break;
                             }
                         }
+                        data = cmc.toUpperCase() + cmf.toUpperCase();
+                        ss.data(data, dirinic, addr);
                         break;
                     case "Inmediato":// Valores inmediatos
                         System.out.print("CODOP = " + codop + "\tCMC = " + cmc);
@@ -159,6 +175,8 @@ public class CodMaquina {
                             default:
                                 break;
                         }
+                        data = cmc.toUpperCase() + cmf.toUpperCase();
+                        ss.data(data, dirinic, addr);
                         break;
                     case "Inmediato1":
                         System.out.print("CODOP = " + codop + "\tCMC = " + cmc);
@@ -191,6 +209,8 @@ public class CodMaquina {
                             default:
                                 break;
                         }
+                        data = cmc.toUpperCase() + cmf.toUpperCase();
+                        ss.data(data, dirinic, addr);
                         break;
                     case "IDX":
                         System.out.print("CODOP = " + codop + "\tCMC = " + cmc);
@@ -382,7 +402,8 @@ public class CodMaquina {
                             }
                             System.out.println(" CMF: " + cmf.toUpperCase());
                         }
-
+                        data = cmc.toUpperCase() + cmf.toUpperCase();
+                        ss.data(data, dirinic, addr);
                         break;
 
                     case "IDX1":// Indizado 9 bits 111rr0zs
@@ -429,7 +450,8 @@ public class CodMaquina {
                         valor1 = conv.bintodec(bin);
                         ff = conv.dectohex(valor1);
                         System.out.println(" CMF: " + cmf.toUpperCase() + " " + ff.toUpperCase());
-
+                        data = cmc.toUpperCase() + cmf.toUpperCase();
+                        ss.data(data, dirinic, addr);
                         break;
 
                     case "IDX2":// Indizado 9 bits 111rr0zs
@@ -465,7 +487,10 @@ public class CodMaquina {
                         ff = conv.dectohex(valor1);
                         ff = conv.ceros(ff);
                         System.out.println(" CMF: " + cmf.toUpperCase() + " " + ff.toUpperCase());
-
+                        // Carga para el codigo objeto
+                        data = cmc + cmf;
+                        data = data.toUpperCase();
+                        ss.data(data, dirinic, addr);
                         break;
 
                     case "[IDX2]":// Indizado 9 bits 111rr011
@@ -503,7 +528,8 @@ public class CodMaquina {
                         ff = conv.dectohex(valor1);
                         ff = conv.ceros(ff);
                         System.out.println(" CMF: " + cmf.toUpperCase() + " " + ff.toUpperCase());
-
+                        data = cmc.toUpperCase() + cmf.toUpperCase();
+                        ss.data(data, dirinic, addr);
                         break;
 
                     case "[D,IDX]":// Indizado 9 bits 111rr011
@@ -536,12 +562,14 @@ public class CodMaquina {
                         // convierte de decimal a hexadecimal
                         cmf = conv.dectohex(valor1);
                         System.out.println(" CMF: " + cmf.toUpperCase());
-
+                        data = cmc + cmf;
+                        data = data.toUpperCase();
+                        ss.data(data, dirinic, addr);
                         break;
 
                     case "REL":// Relativos o saltos
                         System.out.print("CODOP = " + codop + "\tCMC = " + cmc);
-                        //Data = cmc
+                        // Data = cmc
                         String val = tbs.BuscarEt(oper); // Busqueda de la etiqueta
                         /*
                          * cl = contador de localidades anterior
@@ -572,12 +600,15 @@ public class CodMaquina {
                                                 cmf = "0" + cmf;
                                             }
                                             System.out.println(" CMF: " + cmf.toUpperCase());
-                                            //S1 Data + cmf
-                                            //S1(Data, dir-inic, addr)
+                                            // data Data + cmf
+                                            // data(Data, dir-inic, addr)
                                         }
                                     } else {
                                         System.out.println("Error, Rango de desplazamiento no valido");
                                     }
+                                    data = cmc + cmf;
+                                    data = data.toUpperCase();
+                                    ss.data(data, dirinic, addr);
                                     break;
                                 case "2":
                                     if (rs >= -32768 && rs <= 32767) {
@@ -596,6 +627,9 @@ public class CodMaquina {
                                     } else {
                                         System.out.println("Error, Rango de desplazamiento no valido");
                                     }
+                                    data = cmc + cmf;
+                                    data = data.toUpperCase();
+                                    ss.data(data, dirinic, addr);
                                     break;
 
                                 default:
@@ -605,7 +639,7 @@ public class CodMaquina {
                         } else {
                             System.out.println("Error, no se encontro la etiqueta");
                         }
-
+                        
                         break;
 
                     case "Constante":
@@ -641,7 +675,7 @@ public class CodMaquina {
                                     default:
                                         break;
                                 }
-
+                                
                                 break;
                             case "2":
                                 op = valOpe.basesnum(oper);
@@ -677,15 +711,27 @@ public class CodMaquina {
                             default:
                                 break;
                         }
+                        data = cmc + cmf;
+                        data = data.toUpperCase();
+                        ss.data(data, dirinic, addr);
                         break;
                     case "CHARACTER":
-                    System.out.print("CODOP = " + codop + "\tCMC = " + null);
-                    cmf = tbs.asciiFCC(oper);
-                    System.out.println(" CMF: " + cmf.toUpperCase());
+                        System.out.print("CODOP = " + codop + "\tCMC = " + null);
+                        cmf = tbs.asciiFCC(oper);
+                        System.out.println(" CMF: " + cmf.toUpperCase());
+                        data = cmc + cmf;
+                        data = data.toUpperCase();
+                        ss.data(data, dirinic, addr);
+                        break;
+                    case "Memoria":                        
+                        ss.data("", dirinic, addr);
                         break;
                     default:
                         // Cierre del bucle
                         if (codop.equals("END")) {
+                            addr = "END";
+                            ss.data("", dirinic, addr);
+                            ss.S9();
                             ban = false;
                         }
                         break;

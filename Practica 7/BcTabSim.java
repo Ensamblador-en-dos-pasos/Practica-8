@@ -52,7 +52,24 @@ public class BcTabSim {
         byte[] bytes = palabra.getBytes(StandardCharsets.US_ASCII);
         //convertirlo a hexa
         for (int i = 0; i < bytes.length; i++) {
-            palfinal = palfinal + conv.dectohex(bytes[i]) + " ";
+            palfinal = palfinal + conv.dectohex(bytes[i]);
+        }
+        return palfinal.toUpperCase();
+    }
+
+    /**
+     * Metodo para convertir los valores a numerico ascii 
+     * y por ultimo a hexadecimal 
+     * @param palabra
+     * @return
+     */
+    public String asciiS0(String palabra) {     
+        String palfinal ="";
+        palabra = palabra.replaceAll("&", " ");
+        byte[] bytes = palabra.getBytes(StandardCharsets.US_ASCII);
+        //convertirlo a hexa
+        for (int i = 0; i < bytes.length; i++) {
+            palfinal = palfinal + conv.dectohex(bytes[i])+ " ";
         }
         return palfinal.toUpperCase();
     }
