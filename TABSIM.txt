@@ -1,2 +1,10 @@
-ContLoc(Etiqueta-relativa)	 UNO	 000A	
-ContLoc(Etiqueta-relativa)	 DOS	 0018	
+EQU(Etiqueta-absoluta)	 UNO	 0001	
+EQU(Etiqueta-absoluta)	 DOS	 0002	
+EQU(Etiqueta-absoluta)	 TRES	 0003	
+EQU(Etiqueta-absoluta)	 CUA	 0004	
+ContLoc(Etiqueta-relativa)	 CIN	 0000	
+ContLoc(Etiqueta-relativa)	 SEIS	 0003
+EQU(Etiqueta-absoluta)	 SIETE	 0007	
+ContLoc(Etiqueta-relativa)	 OCHO	 0015	
+EQU(Etiqueta-absoluta)	 NUEVE	 0009	
+ContLoc(Etiqueta-relativa)	 DIEZ	 0022	
